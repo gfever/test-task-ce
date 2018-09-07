@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y libmcrypt-dev  \
     && docker-php-ext-install opcache mbstring pdo_mysql zip \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-ADD ./ /var/www
+COPY ./ /var/www
 WORKDIR /var/www
 
 # build backend
