@@ -1,29 +1,30 @@
 version: '2'
 services:
-  app:
+  app_ttce:
     build:
-      context: ./
-      dockerfile: app.dockerfile
+      context: ../
+      dockerfile: docker/app.dockerfile
     working_dir: /var/www
-    volumes:
-      - ../:/var/www
+    #volumes:
+    #  - ../:/var/www
     environment:
       - "DB_PORT=3306"
-      - "DB_HOST=database"
-  web:
+      - "DB_HOST=database_ttce"
+
+  web_ttce:
     build:
-      context: ./
-      dockerfile: web.dockerfile
+      context: ../
+      dockerfile: docker/web.dockerfile
     working_dir: /var/www
     volumes_from:
-      - app
+      - app_ttce
     ports:
-      - 8080:80
+      - 8088:80
 
-  database:
+  database_ttce:
     image: mysql:5.6
     volumes:
-      - dbdata:/var/lib/mysql
+      - dbdata_ttce:/var/lib/mysql
     environment:
       - "MYSQL_DATABASE=homestead"
       - "MYSQL_USER=homestead"
@@ -33,4 +34,4 @@ services:
         - "33061:3306"
 
 volumes:
-  dbdata:
+  dbdata_ttce:
