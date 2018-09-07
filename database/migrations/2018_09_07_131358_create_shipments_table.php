@@ -16,7 +16,7 @@ class CreateShipmentsTable extends Migration
         Schema::create('shipments', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->enum('status', ['free', 'assigned', 'sent', 'cancelled'])->default('free');
+            $table->enum('status', ['free', 'suggested', 'accepted', 'sent', 'cancelled'])->default('free');
             $table->integer('user_id')->nullable()->unsigned();
             $table->timestamps();
 

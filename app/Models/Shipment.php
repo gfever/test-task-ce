@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Prizes\PrizeInterface;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -14,9 +15,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property string name
  * @property string status
  */
-class Shipment extends Model
+class Shipment extends Model implements PrizeInterface
 {
 
+    public const STATUS_FREE = 'free';
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

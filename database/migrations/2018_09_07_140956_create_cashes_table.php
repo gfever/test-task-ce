@@ -16,7 +16,7 @@ class CreateCashesTable extends Migration
         Schema::create('cashes', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('amount');
-            $table->enum('status', ['finished', 'cancelled']);
+            $table->enum('status', ['suggested', 'accepted', 'cancelled', 'converted', 'withdrawal'])->default('suggested');
             $table->integer('user_id')->unsigned();
             $table->timestamps();
 

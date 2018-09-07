@@ -7,5 +7,5 @@ namespace App\Prizes;
 
 interface PrizeInterface
 {
-    public function giveUser(): bool;
+
 }

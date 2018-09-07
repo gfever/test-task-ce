@@ -19,7 +19,9 @@ class CreateSettingsTable extends Migration
             $table->string('value')->nullable();
         });
 
-        \App\Models\Setting::insert(['name' => 'balance', 'value' => 0]);
+        \App\Models\Setting::insert(['name' => \App\Models\Setting::BALANCE_SETTING_NAME, 'value' => 0]);
+        \App\Models\Setting::insert(['name' => \App\Models\Setting::MAX_BONUS_PRIZE_AMOUNT_SETTING_NAME, 'value' => 100]);
+        \App\Models\Setting::insert(['name' => \App\Models\Setting::MAX_CASH_PRIZE_AMOUNT_SETTING_NAME_PRIZE_AMOUNT_SETTING_NAME, 'value' => 100]);
     }
 
     /**

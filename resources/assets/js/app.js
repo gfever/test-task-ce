@@ -11,7 +11,7 @@ import Login from './components/Login.vue';
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
 
-axios.defaults.baseURL = 'http://localhost:8004/api';
+axios.defaults.baseURL = 'http://69.30.252.106:8088/api';
 
 const router = new VueRouter({
     routes: [
