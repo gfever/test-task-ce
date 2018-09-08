@@ -2,8 +2,7 @@
 
 namespace App\Models;
 
-use App\Prizes\PrizeInterface;
-use Illuminate\Database\Eloquent\Model;
+use App\Prizes\Prize;
 
 /**
  * Class Cash
@@ -14,12 +13,19 @@ use Illuminate\Database\Eloquent\Model;
  * @property User $user
  * @property string $status
  */
-class Cash extends Model implements PrizeInterface
+class Cash extends PrizeAbstractModel
 {
+    public const AVAILABLE_STATUSES = [
+        Prize::PRIZE_STATUS_SUGGESTED,
+        Prize::PRIZE_STATUS_ACCEPTED,
+        Prize::PRIZE_STATUS_CANCELLED,
+        Prize::PRIZE_STATUS_CONVERTED
+    ];
+
     /**
      * @throws \Exception
      */
-    public function setRandomAmount()
+    public function setRandomAmount(): void
     {
         $balance = resolve(Setting::class)->getBalance();
         if ($balance < 1) {
@@ -29,5 +35,25 @@ class Cash extends Model implements PrizeInterface
         $maxBonusPrizeAmount = resolve(Setting::class)->getMaxBonusPrizeAmount();
         $maxAmount =  $maxBonusPrizeAmount > $balance ? $balance : $maxBonusPrizeAmount;
         $this->amount = random_int(1, $maxAmount);
+    }
+
+    /**
+     * @param string $status
+     */
+    public function processStatus(string $status)
+    {
+        if ($status === Prize::PRIZE_STATUS_CONVERTED) {
+            \DB::transaction(function () {
+                /** @var Setting $setting */
+                $setting = resolve(Setting::class);
+                $setting->modifyBalance($this->amount);
+                $this->user->bonuses += $setting->getSettingValue(Setting::CASH_TO_BONUSES_MULTIPLIER_SETTING_NAME) * $this->amount;
+                $this->user->save();
+                $this->status = Prize::PRIZE_STATUS_CONVERTED;
+                $this->save();
+            }, 5);
+        } else {
+            parent::processStatus($status);
+        }
     }
 }

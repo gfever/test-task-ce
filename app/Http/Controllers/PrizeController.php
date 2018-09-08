@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Bonus;
+use App\Models\Cash;
+use App\Models\PrizeAbstractModel;
+use App\Models\Shipment;
+use App\Prizes\Prize;
 
 class PrizeController extends Controller
 {
@@ -17,12 +21,64 @@ class PrizeController extends Controller
     }
 
     /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     * @throws \ReflectionException
      */
-    public function suggestRandom()
+    public function random()
     {
+        /** @var Bonus|Cash|Shipment $prize */
+        $prize = resolve(Prize::class)->getRandomPrize();
+        return response([
+            'status' => 'success',
+            'data' => [
+                'type' => $prize->getType(),
+                'id' => $prize->id
+            ]
+        ], 200);
+    }
 
+    /**
+     * @param string $type
+     * @param int $prizeId
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     * @throws \ReflectionException
+     */
+    public function get(string $type, int $prizeId)
+    {
+        /** @var PrizeAbstractModel $prize */
+        $prize = resolve(Prize::class)->getPrizeInstance($type)->where('id', '=', $prizeId)->where('user_id', '=', auth()->id())->firstOrFail();
+
+        return response([
+            'status' => 'success',
+            'data' => [
+                'type' => $prize->getType(),
+                'status' => $prize->status,
+                'id' => $prize->id
+            ]
+        ], 200);
+    }
+
+
+    /**
+     * @param string $type
+     * @param int $prizeId
+     * @param string $status
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     * @throws \ReflectionException
+     */
+    public function updateStatus(string $type, int $prizeId, string $status)
+    {
+        /** @var PrizeAbstractModel $prize */
+        $prize = resolve(Prize::class)->getPrizeInstance($type)->where('id', '=', $prizeId)->where('user_id', '=', auth()->id())->firstOrFail();
+        $prize->updateStatus($status);
+
+        return response([
+            'status' => 'success',
+            'data' => [
+                'type' => $prize->getType(),
+                'status' => $prize->status,
+                'id' => $prize->id
+            ]
+        ], 200);
     }
 }

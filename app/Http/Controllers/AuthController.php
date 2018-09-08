@@ -3,13 +3,24 @@
 namespace App\Http\Controllers;
 
 use Auth;
-use JWTAuth;
-use App\User;
+use Tymon\JWTAuth\JWTAuth;
+use App\Models\User;
 use App\Http\Requests\RegisterFormRequest;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
+
+    /**
+     * Create a new AuthController instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+    }
+
     public function register(RegisterFormRequest $request)
     {
         $user = new User;
@@ -28,7 +39,7 @@ class AuthController extends Controller
     {
         $credentials = $request->only('email', 'password');
 
-        if ( ! $token = JWTAuth::attempt($credentials)) {
+        if ( ! $token = auth()->attempt($credentials)) {
             return response([
                 'status' => 'error',
                 'error' => 'invalid.credentials',
@@ -44,7 +55,7 @@ class AuthController extends Controller
 
     public function user(Request $request)
     {
-        $user = User::find(Auth::user()->id);
+        $user = User::find(auth()->user()->id);
 
         return response([
             'status' => 'success',

@@ -38,9 +38,9 @@ class AddToBalance extends Command
      */
     public function handle()
     {
-        \assert(is_numeric($this->argument('amount')));
-        Setting::where('name', '=', Setting::BALANCE_SETTING_NAME)->update(['value' => Setting::getBalance() + $this->argument('amount')]);
-
-        $this->info('New balance ' . Setting::getBalance());
+        /** @var Setting $setting */
+        $setting = resolve(Setting::class);
+        $setting->modifyBalance($this->argument('amount'));
+        $this->info('New balance ' . $setting->getBalance());
     }
 }
