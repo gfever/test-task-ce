@@ -3,11 +3,11 @@
  * @author d.ivaschenko
  */
 
-namespace App\Models;
+namespace PrototypApp\Models;
 
 /**
  * Interface ModelInterface
- * @package App\Models
+ * @package PrototypApp\Models
  *
  * @property $id
  * @property $status

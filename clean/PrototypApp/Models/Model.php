@@ -3,7 +3,7 @@
  * @author d.ivaschenko
  */
 
-namespace App\Models;
+namespace PrototypApp\Models;
 
 
 abstract class Model implements ModelInterface

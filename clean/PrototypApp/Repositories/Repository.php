@@ -3,15 +3,15 @@
  * @author d.ivaschenko
  */
 
-namespace App\Repositories;
+namespace PrototypApp\Repositories;
 
 
-use App\Container;
-use App\Models\ModelInterface;
+use PrototypApp\Container;
+use PrototypApp\Models\ModelInterface;
 
 /**
  * Class Repository
- * @package App\Repositories
+ * @package PrototypApp\Repositories
  */
 abstract class Repository implements RepositoryInterface
 {

@@ -3,11 +3,11 @@
  * @author d.ivaschenko
  */
 
-namespace App;
+namespace PrototypApp;
 
 /**
  * Class Container
- * @package App
+ * @package PrototypApp
  */
 class Container
 {

@@ -3,9 +3,9 @@
  * @author d.ivaschenko
  */
 
-namespace App\Repositories;
+namespace PrototypApp\Repositories;
 
-use App\Models\Shipment;
+use PrototypApp\Models\Shipment;
 
 class ShipmentRepository extends Repository
 {

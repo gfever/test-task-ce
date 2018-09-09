@@ -3,10 +3,10 @@
  * @author d.ivaschenko
  */
 
-namespace App\Models;
-class Bonus extends Model
+namespace PrototypApp\Models;
+class Shipment extends Model
 {
     public $id;
-    public $amount;
+    public $name;
     public $status;
 }

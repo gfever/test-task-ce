@@ -4,4 +4,4 @@
  */
 require_once '../Autoloader.php';
 
-(new \App\Router())->process();
+(new \PrototypApp\Router())->process();

@@ -3,10 +3,10 @@
  * @author d.ivaschenko
  */
 
-namespace App\Repositories;
+namespace PrototypApp\Repositories;
 
 
-use App\Models\Cash;
+use PrototypApp\Models\Cash;
 
 class CashRepository extends Repository
 {

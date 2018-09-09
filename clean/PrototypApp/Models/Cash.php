@@ -3,7 +3,7 @@
  * @author d.ivaschenko
  */
 
-namespace App\Models;
+namespace PrototypApp\Models;
 class Cash extends Model
 {
     public $id;

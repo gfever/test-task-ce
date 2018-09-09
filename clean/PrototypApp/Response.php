@@ -3,11 +3,11 @@
  * @author d.ivaschenko
  */
 
-namespace App;
+namespace PrototypApp;
 
 /**
  * Class Response
- * @package App
+ * @package PrototypApp
  *
  */
 class Response

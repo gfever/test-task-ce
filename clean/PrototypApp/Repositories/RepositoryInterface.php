@@ -3,10 +3,10 @@
  * @author d.ivaschenko
  */
 
-namespace App\Repositories;
+namespace PrototypApp\Repositories;
 
 
-use App\Models\ModelInterface;
+use PrototypApp\Models\ModelInterface;
 
 interface RepositoryInterface
 {

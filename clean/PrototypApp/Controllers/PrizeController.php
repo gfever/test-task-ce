@@ -3,13 +3,13 @@
  * @author d.ivaschenko
  */
 
-namespace App\Controllers;
+namespace PrototypApp\Controllers;
 
 
-use App\Models\ModelInterface;
-use App\Repositories\Repository;
-use App\Repositories\RepositoryInterface;
-use App\Response;
+use PrototypApp\Models\ModelInterface;
+use PrototypApp\Repositories\Repository;
+use PrototypApp\Repositories\RepositoryInterface;
+use PrototypApp\Response;
 
 class PrizeController
 {

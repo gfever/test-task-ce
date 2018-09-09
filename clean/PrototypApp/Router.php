@@ -3,7 +3,7 @@
  * @author d.ivaschenko
  */
 
-namespace App;
+namespace PrototypApp;
 
 class Router
 {
