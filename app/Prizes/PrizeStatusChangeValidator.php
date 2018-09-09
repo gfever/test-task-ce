@@ -17,10 +17,13 @@ class PrizeStatusChangeValidator
      * @param string $newStatus
      * @param array $availableStatuses
      */
-    public function validate(string $currentStatus, string $newStatus, array $availableStatuses): void
+    public function validate(?string $currentStatus, string $newStatus, array $availableStatuses): void
     {
+        if ($currentStatus === null) {
+            return;
+        }
         if ($currentStatus === $newStatus) {
-            throw new \InvalidArgumentException("Statues can't be the same", 400);
+            throw new \InvalidArgumentException("Statuses can't be the same {$currentStatus} {$newStatus}", 400);
         }
 
         if (!\in_array($newStatus, $availableStatuses, true)) {

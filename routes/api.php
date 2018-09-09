@@ -22,10 +22,12 @@ Route::post('auth/login', 'AuthController@login');
 Route::get('auth/user', 'AuthController@user');
 Route::post('auth/logout', 'AuthController@logout');
 
-/** @see rando */
+/** @see \App\Http\Controllers\PrizeController::random() */
 Route::get('prize/random', 'PrizeController@random');
+/** @see \App\Http\Controllers\PrizeController::get() */
 Route::get('prize/{prize}', 'PrizeController@get');
-Route::put('prize/{type}/{prizeId}/{status}', 'PrizeController@acceptOrCancel')->where(
+/** @see \App\Http\Controllers\PrizeController::updateStatus() */
+Route::put('prize/{type}/{prizeId}/{status}', 'PrizeController@updateStatus')->where(
     [
         'type' => implode('|', \App\Prizes\Prize::PRIZE_TYPES)
     ]

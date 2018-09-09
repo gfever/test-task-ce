@@ -30,10 +30,8 @@ class PrizeController extends Controller
         $prize = resolve(Prize::class)->getRandomPrize();
         return response([
             'status' => 'success',
-            'data' => [
-                'type' => $prize->getType(),
-                'id' => $prize->id
-            ]
+            'type' => $prize->getType(),
+            'prize' => $prize
         ], 200);
     }
 
@@ -50,11 +48,8 @@ class PrizeController extends Controller
 
         return response([
             'status' => 'success',
-            'data' => [
-                'type' => $prize->getType(),
-                'status' => $prize->status,
-                'id' => $prize->id
-            ]
+            'type' => $type,
+            'prize' => $prize
         ], 200);
     }
 
@@ -74,11 +69,8 @@ class PrizeController extends Controller
 
         return response([
             'status' => 'success',
-            'data' => [
-                'type' => $prize->getType(),
-                'status' => $prize->status,
-                'id' => $prize->id
-            ]
+            'type' => $type,
+            'prize' => $prize
         ], 200);
     }
 }

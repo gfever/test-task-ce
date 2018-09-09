@@ -28,12 +28,12 @@ class Cash extends PrizeAbstractModel
     public function setRandomAmount(): void
     {
         $balance = resolve(Setting::class)->getBalance();
-        if ($balance < 1) {
+        if ($balance->value < 1) {
             throw new \Exception('Empty balance');
         }
 
         $maxBonusPrizeAmount = resolve(Setting::class)->getMaxBonusPrizeAmount();
-        $maxAmount =  $maxBonusPrizeAmount > $balance ? $balance : $maxBonusPrizeAmount;
+        $maxAmount = $maxBonusPrizeAmount > $balance->value ? $balance->value : $maxBonusPrizeAmount;
         $this->amount = random_int(1, $maxAmount);
     }
 

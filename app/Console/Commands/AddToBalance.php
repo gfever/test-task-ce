@@ -41,6 +41,6 @@ class AddToBalance extends Command
         /** @var Setting $setting */
         $setting = resolve(Setting::class);
         $setting->modifyBalance($this->argument('amount'));
-        $this->info('New balance ' . $setting->getBalance());
+        $this->info('New balance ' . $setting->getBalance()->value);
     }
 }

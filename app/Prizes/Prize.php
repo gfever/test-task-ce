@@ -48,11 +48,40 @@ class Prize
      */
     public function getPrizeInstance(string $type): PrizeInterface
     {
-        if (\in_array($type, self::PRIZE_TYPES, true)) {
+        if (!\in_array($type, self::PRIZE_TYPES, true)) {
             throw new \InvalidArgumentException("Unknown prize type: {$type}", 400);
         }
 
         return resolve( self::MODELS_PACKAGE . '\\' . ucfirst($type));
+    }
+
+
+    /**
+     * @return string
+     */
+    private function choosePrizeType(): string
+    {
+        $prizeChosen = false;
+        $prizeType = self::PRIZE_TYPE_BONUS;
+        while ($prizeChosen === false) {
+            $prizeTypes = self::PRIZE_TYPES;
+            shuffle($prizeTypes);
+            $prizeType = head($prizeTypes);
+
+            if ($prizeType === self::PRIZE_TYPE_SHIPMENT && empty(resolve(Shipment::class)->where('status', '=', self::PRIZE_STATUS_FREE)->first())) {
+                unset($prizeTypes[2]);
+                continue;
+            }
+
+            if ($prizeType === self::PRIZE_TYPE_CASH && resolve(Setting::class)->getBalance()->value < 1) {
+                unset($prizeTypes[1]);
+                continue;
+            }
+
+            $prizeChosen = true;
+        }
+
+        return $prizeType;
     }
 
     /**
@@ -61,12 +90,8 @@ class Prize
      */
     public function getRandomPrize(): PrizeInterface
     {
-        $prizeTypes = self::PRIZE_TYPES;
-        shuffle($prizeTypes);
-        $prizeType = head($prizeTypes);
-        /** @var PrizeInterface $prize */
+        $prizeType = $this->choosePrizeType();
         $prize = $this->getPrizeInstance($prizeType);
-
         \DB::transaction(function () use ($prizeType, $prize) {
             if (\in_array($prizeType, [self::PRIZE_TYPE_BONUS, self::PRIZE_TYPE_CASH], true)) {
                 /** @var Bonus|Cash $prize */
@@ -81,10 +106,14 @@ class Prize
                 $prize = $prize->where('status', '=', self::PRIZE_STATUS_FREE)->orderBy(\DB::raw('RAND()'))->first();
             }
 
-            $prize->user_id = \Auth::id();
+            $prize->user_id = auth()->user()->id;
             $prize->updateStatus(self::PRIZE_STATUS_SUGGESTED);
             $prize->save();
         }, 5);
+
+        if (empty($prize->id)) {
+            throw new \Exception('Prize create failed');
+        }
 
         return $prize;
     }

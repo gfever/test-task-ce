@@ -36,8 +36,8 @@ class Setting extends Model
     public function modifyBalance(int $amount): void
     {
         $balance = $this->getSetting(self::BALANCE_SETTING_NAME);
-        $balance += $amount;
-        if ($balance < 0) {
+        $balance->value += $amount;
+        if ($balance->value < 0) {
             throw new \InvalidArgumentException('Balance amount can\'t be < 0');
         }
 
@@ -47,9 +47,9 @@ class Setting extends Model
     /**
      * @return int
      */
-    public function getBalance(): int
+    public function getBalance(): Setting
     {
-        return $this->getSettingValue(self::BALANCE_SETTING_NAME);
+        return $this->getSetting(self::BALANCE_SETTING_NAME);
     }
 
     /**

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Prizes\Prize;
 use App\Prizes\PrizeInterface;
 use App\Prizes\PrizeStatusChangeValidator;
 use Illuminate\Database\Eloquent\Model;
@@ -50,7 +49,8 @@ abstract class PrizeAbstractModel extends Model implements PrizeInterface
     /**
      * @param string $status
      */
-    protected function processStatus(string $status) {
+    protected function processStatus(string $status)
+    {
         $this->status = $status;
         $this->save();
     }
