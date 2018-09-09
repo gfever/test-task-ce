@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Prizes\Prize;
 
 /**
  * Class Shipment
@@ -14,14 +14,13 @@ use Illuminate\Database\Eloquent\Model;
  * @property string name
  * @property string status
  */
-class Shipment extends Model
+class Shipment extends PrizeAbstractModel
 {
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'user_id');
-    }
+    public const AVAILABLE_STATUSES = [
+        Prize::PRIZE_STATUS_FREE,
+        Prize::PRIZE_STATUS_SUGGESTED,
+        Prize::PRIZE_STATUS_ACCEPTED,
+        Prize::PRIZE_STATUS_CANCELLED,
+        Prize::PRIZE_STATUS_SENT,
+    ];
 }

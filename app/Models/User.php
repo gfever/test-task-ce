@@ -4,14 +4,15 @@ namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-
+use Tymon\JWTAuth\Contracts\JWTSubject;
 /**
  * Class User
  * @package App\Models
  *
  * @property-read integer $id
+ * @property integer $bonuses
  */
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
 
@@ -33,8 +34,38 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function prizes()
+    public function prizeBonus()
     {
-        return $this->hasMany(Prize::class);
+        return $this->hasMany(Bonus::class);
+    }
+
+    public function prizeCash()
+    {
+        return $this->hasMany(Cash::class);
+    }
+
+    public function prizeShipment()
+    {
+        return $this->hasMany(Shipment::class);
+    }
+
+    /**
+     * Get the identifier that will be stored in the subject claim of the JWT.
+     *
+     * @return mixed
+     */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
     }
 }

@@ -16,7 +16,7 @@ class CreateBonusesTable extends Migration
         Schema::create('bonuses', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('amount');
-            $table->enum('status', ['finished', 'cancelled', 'converted']);
+            $table->enum('status', ['suggested', 'accepted', 'cancelled'])->default('suggested');
             $table->integer('user_id')->unsigned();
             $table->timestamps();
 
