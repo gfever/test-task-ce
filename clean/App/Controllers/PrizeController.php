@@ -6,12 +6,9 @@
 namespace App\Controllers;
 
 
-use App\Helpers\Helper;
 use App\Models\ModelInterface;
-use App\Models\Prize;
 use App\Repositories\Repository;
 use App\Repositories\RepositoryInterface;
-use App\Repositories\UrlRepository;
 use App\Response;
 
 class PrizeController

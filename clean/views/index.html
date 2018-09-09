@@ -10,9 +10,39 @@
 </head>
 <body>
 <div class="page__form">
-    <
+
     <div id="result"></div>
 </div>
-<script src="/js/script.js"></script>
+<script>
+    function getData() {
+        var http = new XMLHttpRequest();
+        http.open("GET", "/clean/api/random", true);
+
+        // Set headers
+        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        http.onreadystatechange = function () {
+            if (http.readyState == 4 && http.status == 200) {
+                data = JSON.parse(http.responseText);
+                var msg;
+                if (data.type == 'cash') {
+                    msg = 'You won cash prize amount of ' + data.data.amount + '$';
+                }
+                if (data.type == 'bonus') {
+                    msg = 'You won bonus prize amount of ' + data.data.amount;
+                }
+
+                if (data.type == 'shipment') {
+                    msg = 'You won shipment prize name ' + data.data.name;
+                }
+
+                document.getElementById("result").innerHTML = msg;
+            }
+        };
+
+        http.send();
+    }
+
+    getData();
+</script>
 </body>
 </html>

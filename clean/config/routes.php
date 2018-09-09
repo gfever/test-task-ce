@@ -4,7 +4,7 @@
  */
 
 return [
-    'GET@/api/clean' => 'PrizeController@index',
-    'GET@/api/clean/random' => 'PrizeController@random',
-    'PUT@/api/clean/status' => 'PrizeController@status',
+    'GET@clean/api/index' => 'PrizeController@index',
+    'GET@clean/api/random' => 'PrizeController@random',
+    'PUT@clean/api/status' => 'PrizeController@status',
 ];

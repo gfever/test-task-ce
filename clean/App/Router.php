@@ -17,6 +17,7 @@ class Router
         $uri = trim($uriParts[0], '/');
 
         $routes = include __DIR__ . '/../config/routes.php';
+
         if (empty($route = $routes["$method@$uri"])) {
             http_response_code(404);
             die();
@@ -32,9 +33,12 @@ class Router
     {
         try {
             $result = $this->controller->{$this->action}();
-            foreach ($result['headers'] as $headerName => $info) {
-                header("{$headerName}: {$info[0]}", $info[1]);
+            if (!empty($result['headers'])) {
+                foreach ($result['headers'] as $headerName => $info) {
+                    header("{$headerName}: {$info[0]}", $info[1]);
+                }
             }
+
             if (!empty($result['message'])) {
                 echo($result['message']);
             }

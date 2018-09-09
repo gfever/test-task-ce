@@ -123,7 +123,7 @@ abstract class Repository implements RepositoryInterface
      */
     public static function getRepositoryByType(string $type): RepositoryInterface
     {
-        Container::make('\App\Repositories\\' . ucfirst($type) . 'Repository');
+        return Container::make('\App\Repositories\\' . ucfirst($type) . 'Repository');
     }
 
 
