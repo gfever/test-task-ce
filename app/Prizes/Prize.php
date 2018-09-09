@@ -28,6 +28,7 @@ class Prize
     public const PRIZE_STATUS_CANCELLED = 'cancelled';
     public const PRIZE_STATUS_CONVERTED = 'converted';
     public const PRIZE_STATUS_SENT = 'sent';
+    public const PRIZE_STATUS_WITHDRAWAL = 'withdrawal';
 
 
     private const MODELS_PACKAGE = '\App\Models';

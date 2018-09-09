@@ -19,7 +19,8 @@ class Cash extends PrizeAbstractModel
         Prize::PRIZE_STATUS_SUGGESTED,
         Prize::PRIZE_STATUS_ACCEPTED,
         Prize::PRIZE_STATUS_CANCELLED,
-        Prize::PRIZE_STATUS_CONVERTED
+        Prize::PRIZE_STATUS_CONVERTED,
+        Prize::PRIZE_STATUS_WITHDRAWAL
     ];
 
     /**
