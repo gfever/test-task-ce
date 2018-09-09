@@ -38,21 +38,27 @@ class Cash extends PrizeAbstractModel
         $this->amount = random_int(1, $maxAmount);
     }
 
+
+    public function convertToBonuses(): void
+    {
+        /** @var Setting $setting */
+        $setting = resolve(Setting::class);
+        $setting->modifyBalance($this->amount);
+        $this->user->bonuses += $setting->getSettingValue(Setting::CASH_TO_BONUSES_MULTIPLIER_SETTING_NAME) * $this->amount;
+        $this->user->save();
+        $this->status = Prize::PRIZE_STATUS_CONVERTED;
+        $this->save();
+    }
+
     /**
      * @param string $status
      */
-    public function processStatus(string $status)
+    public function processStatus(string $status): void
     {
         if ($status === Prize::PRIZE_STATUS_CONVERTED) {
             \DB::transaction(function () {
-                /** @var Setting $setting */
-                $setting = resolve(Setting::class);
-                $setting->modifyBalance($this->amount);
-                $this->user->bonuses += $setting->getSettingValue(Setting::CASH_TO_BONUSES_MULTIPLIER_SETTING_NAME) * $this->amount;
-                $this->user->save();
-                $this->status = Prize::PRIZE_STATUS_CONVERTED;
-                $this->save();
-            }, 5);
+                $this->convertToBonuses();
+            });
         } else {
             parent::processStatus($status);
         }

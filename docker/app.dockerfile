@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install -y gnupg2 \
     && docker-php-ext-enable memcached \
     && docker-php-ext-install opcache mbstring pdo_mysql zip \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+    && composer global require phpunit/phpunit ^7.0 --no-progress --no-scripts --no-interaction \
     && apt-get install -y nodejs \
     build-essential \
     libpng-dev \
