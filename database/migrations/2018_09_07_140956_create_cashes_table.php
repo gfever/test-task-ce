@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateCashesTable extends Migration
 {
@@ -16,7 +16,7 @@ class CreateCashesTable extends Migration
         Schema::create('cashes', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('amount');
-            $table->enum('status', ['suggested', 'accepted', 'cancelled', 'converted', 'withdrawal'])->default('suggested');
+            $table->enum('status', \App\Models\Cash::AVAILABLE_STATUSES)->default(\App\Prizes\Prize::PRIZE_STATUS_SUGGESTED);
             $table->integer('user_id')->unsigned();
             $table->timestamps();
 

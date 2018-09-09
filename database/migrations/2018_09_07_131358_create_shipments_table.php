@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateShipmentsTable extends Migration
 {
@@ -16,7 +16,7 @@ class CreateShipmentsTable extends Migration
         Schema::create('shipments', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->enum('status', ['free', 'suggested', 'accepted', 'sent', 'cancelled'])->default('free');
+            $table->enum('status', \App\Models\Shipment::AVAILABLE_STATUSES)->default(\App\Prizes\Prize::PRIZE_STATUS_FREE);
             $table->integer('user_id')->nullable()->unsigned();
             $table->timestamps();
 
