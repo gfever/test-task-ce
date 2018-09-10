@@ -6,7 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" type="text/javascript"></script>
 </head>
 <body>
 <div class="page__form">
@@ -14,6 +14,18 @@
     <div id="result"></div>
 </div>
 <script>
+
+    $(document).ready(function () {
+        $('#accept').on('click', function (e) {
+            $('#buttons').html('');
+            $('#message').html('You accept the prize');
+        })
+
+        $('#cancel').on('click', function (e) {
+            $('#buttons').html('');
+            $('#message').html('You cancel the prize');
+        })
+    })
     function getData() {
         var http = new XMLHttpRequest();
         http.open("GET", "/clean/api/random", true);
@@ -24,18 +36,27 @@
             if (http.readyState == 4 && http.status == 200) {
                 data = JSON.parse(http.responseText);
                 var msg;
-                if (data.type == 'cash') {
-                    msg = 'You won cash prize amount of ' + data.data.amount + '$';
-                }
-                if (data.type == 'bonus') {
-                    msg = 'You won bonus prize amount of ' + data.data.amount;
+
+                if (data.type == 'cash' && data.data.status == 'accepted') {
+
                 }
 
-                if (data.type == 'shipment') {
-                    msg = 'You won shipment prize name ' + data.data.name;
+                if ( data.data.status == 'suggested') {
+                    if (data.type == 'cash') {
+                        msg = 'You won cash prize amount of ' + data.data.amount + '$';
+                    }
+                    if (data.type == 'bonus') {
+                        msg = 'You won bonus prize amount of ' + data.data.amount;
+                    }
+
+                    if (data.type == 'shipment') {
+                        msg = 'You won shipment prize name ' + data.data.name;
+                    }
+
+                    var buttons = '<h3 id="message">' + msg + '</h3><div id="buttons"><button id="accept">accept</button><button id="accept">cancel</button></div>'
                 }
 
-                document.getElementById("result").innerHTML = msg;
+                $("#result").html(buttons);
             }
         };
 
