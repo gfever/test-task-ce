@@ -30,7 +30,8 @@ class CashModelTest extends TestCase
 
         $setting = $this->createMock(Setting::class);
         $setting->expects($this->once())->method('modifyBalance')->with($cash->amount);
-        $setting->expects($this->once())->method('getSettingValue')->with(Setting::CASH_TO_BONUSES_MULTIPLIER_SETTING_NAME)->willReturn(2);
+        $setting->expects($this->once())->method('getSettingValue')
+            ->with(Setting::CASH_TO_BONUSES_MULTIPLIER_SETTING_NAME)->willReturn(2);
 
         $this->instance(Setting::class, $setting);
 

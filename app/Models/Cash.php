@@ -6,22 +6,24 @@ use App\Prizes\Prize;
 
 /**
  * Class Cash
+ *
  * @package App\Models
  *
- * @property int $amount
- * @property int $user_id
- * @property User $user
+ * @property int    $amount
+ * @property int    $user_id
+ * @property User   $user
  * @property string $status
  */
 class Cash extends PrizeAbstractModel
 {
-    public const AVAILABLE_STATUSES = [
-        Prize::PRIZE_STATUS_SUGGESTED,
-        Prize::PRIZE_STATUS_ACCEPTED,
-        Prize::PRIZE_STATUS_CANCELLED,
-        Prize::PRIZE_STATUS_CONVERTED,
-        Prize::PRIZE_STATUS_WITHDRAWAL
-    ];
+    public const AVAILABLE_STATUSES
+        = [
+            Prize::PRIZE_STATUS_SUGGESTED,
+            Prize::PRIZE_STATUS_ACCEPTED,
+            Prize::PRIZE_STATUS_CANCELLED,
+            Prize::PRIZE_STATUS_CONVERTED,
+            Prize::PRIZE_STATUS_WITHDRAWAL
+        ];
 
     /**
      * @throws \Exception
@@ -38,18 +40,6 @@ class Cash extends PrizeAbstractModel
         $this->amount = random_int(1, $maxAmount);
     }
 
-
-    public function convertToBonuses(): void
-    {
-        /** @var Setting $setting */
-        $setting = resolve(Setting::class);
-        $setting->modifyBalance($this->amount);
-        $this->user->bonuses += $setting->getSettingValue(Setting::CASH_TO_BONUSES_MULTIPLIER_SETTING_NAME) * $this->amount;
-        $this->user->save();
-        $this->status = Prize::PRIZE_STATUS_CONVERTED;
-        $this->save();
-    }
-
     /**
      * @param string $status
      */
@@ -62,5 +52,17 @@ class Cash extends PrizeAbstractModel
         } else {
             parent::processStatus($status);
         }
+    }
+
+    public function convertToBonuses(): void
+    {
+        /** @var Setting $setting */
+        $setting = resolve(Setting::class);
+        $setting->modifyBalance($this->amount);
+        $this->user->bonuses += $setting->getSettingValue(Setting::CASH_TO_BONUSES_MULTIPLIER_SETTING_NAME)
+            * $this->amount;
+        $this->user->save();
+        $this->status = Prize::PRIZE_STATUS_CONVERTED;
+        $this->save();
     }
 }

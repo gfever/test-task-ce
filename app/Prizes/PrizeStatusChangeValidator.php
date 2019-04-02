@@ -15,7 +15,7 @@ class PrizeStatusChangeValidator
     /**
      * @param string $currentStatus
      * @param string $newStatus
-     * @param array $availableStatuses
+     * @param array  $availableStatuses
      */
     public function validate(?string $currentStatus, string $newStatus, array $availableStatuses): void
     {
@@ -37,12 +37,26 @@ class PrizeStatusChangeValidator
             throw new \InvalidArgumentException("New status  {$newStatus} behind current {$currentStatus}", 400);
         }
 
-        if (\count(array_unique([$currentStatus, $newtStatusIndex, Prize::PRIZE_STATUS_CANCELLED, Prize::PRIZE_STATUS_ACCEPTED])) === 2) {
-            throw new \InvalidArgumentException("New status {$newStatus} and current {$currentStatus} not switchable", 400);
+        if (\count(array_unique([
+                $currentStatus,
+                $newtStatusIndex,
+                Prize::PRIZE_STATUS_CANCELLED,
+                Prize::PRIZE_STATUS_ACCEPTED
+            ])) === 2
+        ) {
+            throw new \InvalidArgumentException("New status {$newStatus} and current {$currentStatus} not switchable",
+                400);
         }
 
-        if (\count(array_unique([$currentStatus, $newtStatusIndex, Prize::PRIZE_STATUS_WITHDRAWAL, Prize::PRIZE_STATUS_CONVERTED])) === 2) {
-            throw new \InvalidArgumentException("New status {$newStatus} and current {$currentStatus} not switchable", 400);
+        if (\count(array_unique([
+                $currentStatus,
+                $newtStatusIndex,
+                Prize::PRIZE_STATUS_WITHDRAWAL,
+                Prize::PRIZE_STATUS_CONVERTED
+            ])) === 2
+        ) {
+            throw new \InvalidArgumentException("New status {$newStatus} and current {$currentStatus} not switchable",
+                400);
         }
     }
 

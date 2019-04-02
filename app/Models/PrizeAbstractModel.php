@@ -9,16 +9,18 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Class Bonus
+ *
  * @package App\Models
  *
- * @property int $amount
- * @property int $user_id
- * @property User $user
+ * @property int    $amount
+ * @property int    $user_id
+ * @property User   $user
  * @property string $status
  */
 abstract class PrizeAbstractModel extends Model implements PrizeInterface
 {
     public const AVAILABLE_STATUSES = [];
+
     /**
      * @return string
      * @throws \ReflectionException

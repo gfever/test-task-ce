@@ -6,20 +6,23 @@ use App\Prizes\Prize;
 
 /**
  * Class Bonus
+ *
  * @package App\Models
  *
- * @property int $amount
- * @property int $user_id
- * @property User $user
+ * @property int    $amount
+ * @property int    $user_id
+ * @property User   $user
  * @property string $status
  */
 class Bonus extends PrizeAbstractModel
 {
-    public const AVAILABLE_STATUSES = [
-        Prize::PRIZE_STATUS_SUGGESTED,
-        Prize::PRIZE_STATUS_ACCEPTED,
-        Prize::PRIZE_STATUS_CANCELLED
-    ];
+    public const AVAILABLE_STATUSES
+        = [
+            Prize::PRIZE_STATUS_SUGGESTED,
+            Prize::PRIZE_STATUS_ACCEPTED,
+            Prize::PRIZE_STATUS_CANCELLED
+        ];
+
     /**
      * @throws \Exception
      */

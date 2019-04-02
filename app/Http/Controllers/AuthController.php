@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
-use Tymon\JWTAuth\JWTAuth;
-use App\Models\User;
 use App\Http\Requests\RegisterFormRequest;
+use App\Models\User;
+use Auth;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\JWTAuth;
 
 class AuthController extends Controller
 {
@@ -31,7 +31,7 @@ class AuthController extends Controller
 
         return response([
             'status' => 'success',
-            'data' => $user
+            'data'   => $user
         ], 200);
     }
 
@@ -39,18 +39,18 @@ class AuthController extends Controller
     {
         $credentials = $request->only('email', 'password');
 
-        if ( ! $token = auth()->attempt($credentials)) {
+        if (!$token = auth()->attempt($credentials)) {
             return response([
                 'status' => 'error',
-                'error' => 'invalid.credentials',
-                'msg' => 'Invalid Credentials.'
+                'error'  => 'invalid.credentials',
+                'msg'    => 'Invalid Credentials.'
             ], 400);
         }
 
         return response([
             'status' => 'success'
         ])
-        ->header('Authorization', $token);
+            ->header('Authorization', $token);
     }
 
     public function user(Request $request)
@@ -59,7 +59,7 @@ class AuthController extends Controller
 
         return response([
             'status' => 'success',
-            'data' => $user
+            'data'   => $user
         ]);
     }
 
@@ -76,7 +76,7 @@ class AuthController extends Controller
 
         return response([
             'status' => 'success',
-            'msg' => 'Logged out Successfully.'
+            'msg'    => 'Logged out Successfully.'
         ], 200);
     }
 
